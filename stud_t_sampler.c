@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 	double x, y;
 	double logLx, logLy, loga;
 	double accept;
+	double Fish;
 	
 	clock_t begin = clock();
 	clock_t end;
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
 	
 	// set the proposal distribution variance
 	alpha = atof(argv[2]);
+	Fish = 1./sqrt((1. + nu)/(nu*sigma*sigma));
 	
 	// set the initial samples
 	x = mu;
@@ -67,6 +69,7 @@ int main(int argc, char *argv[])
 	for (i=0; i<NMCMC; i++)
 	{
 		y = x + gsl_ran_gaussian(r, alpha);
+		y = x + gsl_ran_gaussian(r, Fish);
 		logLy = get_logL(y);
 		loga = log(gsl_rng_uniform(r));
 		
