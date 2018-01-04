@@ -6,7 +6,7 @@ CCFLAGS += -g -Wall -std=gnu99 -fmax-errors=5 #-Werror
 
 # OBJS = Ecc_SPA.o 
 
-all : stud_t # $(OBJS)  
+all : stud_t pet # $(OBJS)  
 
 # Ecc_SPA.o : Ecc_SPA.c Ecc_SPA.h Ecc_Binary.h Constants.h Ecc_Math.h
 # 	$(CC) $(CCFLAGS) -c Ecc_SPA.c
@@ -15,5 +15,8 @@ all : stud_t # $(OBJS)
 stud_t : $(OBJS) stud_t_sampler.c
 	$(CC) $(CCFLAGS) -o stud_t stud_t_sampler.c $(OBJS) $(INCDIR:%=-I%) $(LIBDIR:%=-L%) $(LIBS:%=-l%)
 	
+pet : $(OBJS) PE_stud_t.c
+	$(CC) $(CCFLAGS) -o pet PE_stud_t.c $(OBJS) $(INCDIR:%=-I%) $(LIBDIR:%=-L%) $(LIBS:%=-l%)
+	
 clean: 
-	rm stud_t # *.o  
+	rm stud_t pet# *.o  

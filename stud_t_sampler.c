@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	
 	for (i=0; i<NMCMC; i++)
 	{
-		y = x + gsl_ran_gaussian(r, alpha);
+		//y = x + gsl_ran_gaussian(r, alpha);
 		y = x + gsl_ran_gaussian(r, Fish);
 		logLy = get_logL(y);
 		loga = log(gsl_rng_uniform(r));
