@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	
 	long i;
 	
-	const long NDATA = 100;
+	const long NDATA = 1000;
 	const long NMCMC = 1e5;
 	long Naccept = 0;
 	
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 		for (j=0; j<NP; j++)
 		{
 			k    = (int)(NP*gsl_rng_uniform(r));
-			jump = gsl_ran_gaussian(r, 1.)*evecs[k][j]/sqrt(evals[k]*NP);
+			jump = 0.05*gsl_ran_gaussian(r, 1.)*evecs[k][j]/sqrt(evals[k]*NP);
 			params_y[j] = params_x[j] + jump;
 		}
 		check_priors(params_y, &meet_priors);
@@ -213,6 +213,7 @@ double get_logL(double *data, long N, double *params)
 	logL += N*a;
 	
 	return logL;
+//	return 1.;
 }
 
 void make_data(double *data, long N, gsl_rng *r)
