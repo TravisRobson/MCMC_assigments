@@ -117,9 +117,9 @@ int main(int argc, char *argv[])
 	for (i=0; i<NMCMC; i++)
 	{
 		// propose new parameters
+		k = (int)(NP*gsl_rng_uniform(r));
 		for (j=0; j<NP; j++)
 		{
-			k    = (int)(NP*gsl_rng_uniform(r));
 			jump = 0.05*gsl_ran_gaussian(r, 1.)*evecs[k][j]/sqrt(evals[k]*NP);
 			params_y[j] = params_x[j] + jump;
 		}
