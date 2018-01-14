@@ -9,18 +9,7 @@
 #include <gsl/gsl_sf_gamma.h>
 
 #include "Constants.h"
-
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-#define PBWIDTH 60
-
-void printProgress(double percentage)
-{
-    double val = (percentage * 100);
-    int lpad = (int) (percentage * PBWIDTH);
-    int rpad = PBWIDTH - lpad;
-    printf ("\r%3.1f%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
-    fflush (stdout);
-}
+#include "IO_ass2.h"
 
 double get_logL(double x);
 
@@ -33,7 +22,6 @@ int main(int argc, char *argv[])
 	long Naccept = 0;
 	
 	double time_spent;
-	double alpha;
 	double x, y;
 	double logLx, logLy, loga;
 	double accept;
@@ -57,7 +45,6 @@ int main(int argc, char *argv[])
 	out_file = fopen(argv[3], "w");
 	
 	// set the proposal distribution variance
-	alpha = atof(argv[2]);
 	Fish = 1./sqrt((1. + nu)/(nu*sigma*sigma));
 	
 	// set the initial samples
@@ -68,7 +55,7 @@ int main(int argc, char *argv[])
 	
 	for (i=0; i<NMCMC; i++)
 	{
-		//y = x + gsl_ran_gaussian(r, alpha);
+		// y = x + gsl_ran_gaussian(r, alpha);
 		y = x + gsl_ran_gaussian(r, Fish);
 		logLy = get_logL(y);
 		loga = log(gsl_rng_uniform(r));

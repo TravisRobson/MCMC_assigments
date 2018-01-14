@@ -9,18 +9,8 @@
 #include <gsl/gsl_sf_gamma.h>
 
 #include "Constants.h"
+#include "IO_ass2.h"
 
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-#define PBWIDTH 60
-
-void printProgress(double percentage)
-{
-    double val = (percentage * 100);
-    int lpad = (int) (percentage * PBWIDTH);
-    int rpad = PBWIDTH - lpad;
-    printf ("\r%3.1f%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
-    fflush (stdout);
-}
 
 void make_data(double *data, long N, gsl_rng *r);
 double get_logL_sampler(double x);
@@ -73,7 +63,7 @@ int main(int argc, char *argv[])
 	
 	// store eigen-bs
 	evals = malloc(NP*sizeof(double));
-	evecs = malloc(NP*sizeof(double));
+	evecs = malloc(NP*sizeof(double *));
 	for (i=0; i<NP; i++) evecs[i] = malloc(NP*sizeof(double));
 	
 	evals[0] = (7. + 3.*pow(M_PI,2.) + sqrt(4261. - 390.*pow(M_PI,2.) + 9.*pow(M_PI,4.)))/72.;
@@ -120,7 +110,7 @@ int main(int argc, char *argv[])
 		k = (int)(NP*gsl_rng_uniform(r));
 		for (j=0; j<NP; j++)
 		{
-			jump = 0.05*gsl_ran_gaussian(r, 1.)*evecs[k][j]/sqrt(evals[k]*NP);
+			jump = 0.1*gsl_ran_gaussian(r, 1.)*evecs[k][j]/sqrt(evals[k]*NP);
 			params_y[j] = params_x[j] + jump;
 		}
 		check_priors(params_y, &meet_priors);
@@ -162,6 +152,7 @@ int main(int argc, char *argv[])
 	fprintf(stdout, "max mu: %f\n", params_max[0]);
 	fprintf(stdout, "max nu: %f\n", params_max[1]);
 	fprintf(stdout, "max sg: %f\n", params_max[2]);
+	
 	
 	
 	
